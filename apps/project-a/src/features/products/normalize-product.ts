@@ -3,11 +3,21 @@ import type { DummyJsonProduct, Product } from "./product.types";
 /**
  * Converts a product title and id into a URL friendly slug
  */
-const toSlug = (title: string, id: number) => {
+export const toProductSlug = (title: string, id: number) => {
   return `${title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")}-${id}`;
+};
+
+export const getProductIdFromSlug = (slug: string) => {
+  const match = slug.match(/-(\d+)$/);
+
+  if (!match) {
+    return null;
+  }
+
+  return Number(match[1]);
 };
 
 /**
@@ -21,7 +31,7 @@ export const normalizeProduct = (
 ): Product => {
   return {
     id: product.id,
-    slug: toSlug(product.title, product.id),
+    slug: toProductSlug(product.title, product.id),
     title: product.title,
     description: product.description,
     price: product.price,
@@ -30,5 +40,11 @@ export const normalizeProduct = (
     image: product.thumbnail,
     images: product.images,
     rating: product.rating,
+    brand: product.brand,
+    stock: product.stock,
+    sku: product.sku,
+    warrantyInformation: product.warrantyInformation,
+    shippingInformation: product.shippingInformation,
+    availabilityStatus: product.availabilityStatus,
   };
 };

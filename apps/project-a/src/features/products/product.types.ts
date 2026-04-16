@@ -9,6 +9,12 @@ export type Product = {
   image: string;
   images: string[];
   rating: number;
+  brand?: string;
+  stock?: number;
+  sku?: string;
+  warrantyInformation?: string;
+  shippingInformation?: string;
+  availabilityStatus?: string;
 };
 
 export type DummyJsonProduct = {
@@ -20,6 +26,12 @@ export type DummyJsonProduct = {
   thumbnail: string;
   images: string[];
   rating: number;
+  brand?: string;
+  stock?: number;
+  sku?: string;
+  warrantyInformation?: string;
+  shippingInformation?: string;
+  availabilityStatus?: string;
 };
 
 export type DummyJsonProductsResponse = {
