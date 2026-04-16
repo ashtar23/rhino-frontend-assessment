@@ -1,5 +1,5 @@
-export default function Home() {
-  return (
-    <main className="flex justify-center h-screen items-center">Project A</main>
-  );
+import { redirect } from "next/navigation";
+
+export default function HomePage() {
+  redirect("/en");
 }
