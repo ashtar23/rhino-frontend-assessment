@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isMarket } from "@repo/types";
-
 import { getProducts } from "@/features/products/get-products";
 import { ProductCard } from "@/features/products/product-card";
 
@@ -15,9 +14,7 @@ export async function generateMetadata({
   const { market } = await params;
 
   if (!isMarket(market)) {
-    return {
-      title: "Products",
-    };
+    return { title: "Products" };
   }
 
   return {
@@ -36,11 +33,12 @@ export default async function ProductsPage({ params }: PageProps) {
   const products = await getProducts(market);
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
-      <div className="mb-8 space-y-2">
-        <p className="text-sm uppercase">Project A</p>
-        <h1 className="text-3xl font-semibold">Products</h1>
-        <p className="text-gray-600">Listing refreshed every five minutes.</p>
+    <section className="space-y-8">
+      <div className="space-y-4">
+        <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">
+          Products
+        </h1>
+        <p className="text-zinc-600">Listing refreshed every five minutes</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -48,6 +46,6 @@ export default async function ProductsPage({ params }: PageProps) {
           <ProductCard key={product.id} market={market} product={product} />
         ))}
       </div>
-    </main>
+    </section>
   );
 }
