@@ -2,11 +2,7 @@ import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-type Market = "en" | "ca";
-
-const isMarket = (value: string): value is Market => {
-  return value === "en" || value === "ca";
-};
+import { isMarket } from "@repo/types";
 
 type PageProps = {
   params: Promise<{ market: string }>;
