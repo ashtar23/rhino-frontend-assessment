@@ -1,8 +1,5 @@
-import { getSessionUser } from "@/features/auth/session-cookie";
-import {
-  createSessionValue,
-  setSessionCookie,
-} from "@/features/auth/session-cookie";
+import { getSessionUser } from "@/features/auth/session";
+import { createSessionValue, setSessionCookie } from "@/features/auth/session";
 import { validateCredentials } from "@repo/auth";
 import { notFound, redirect } from "next/navigation";
 import { isMarket } from "@repo/types";

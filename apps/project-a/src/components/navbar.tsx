@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Market } from "@repo/types";
-import {
-  clearSessionCookie,
-  getSessionUser,
-} from "@/features/auth/session-cookie";
+import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 
 type NavbarProps = {
   market: Market;

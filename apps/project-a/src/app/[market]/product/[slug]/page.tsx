@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isMarket } from "@repo/types";
-import { getSessionUser } from "@/features/auth/session-cookie";
+import { getSessionUser } from "@/features/auth/session";
 import { getProductBySlug } from "@/features/products/get-products";
 
 type PageProps = {
