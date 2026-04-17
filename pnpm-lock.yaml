@@ -20,6 +20,9 @@ importers:
 
   apps/project-a:
     dependencies:
+      '@repo/data':
+        specifier: workspace:*
+        version: link:../../packages/data
       '@repo/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -202,6 +205,9 @@ importers:
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.15.3
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@2.6.1)

@@ -1,10 +1,12 @@
-import { getProductIdFromSlug, normalizeProduct } from "./normalize-product";
-import type {
-  DummyJsonProduct,
-  DummyJsonProductsResponse,
-  Product,
-} from "./product.types";
-import { transformProductsForListing } from "./transform-products";
+import {
+  getProductIdFromSlug,
+  normalizeProduct,
+  transformProductsForListing,
+  type DummyJsonProduct,
+  type DummyJsonProductsResponse,
+  type Product,
+} from "@repo/data";
+
 import type { Market } from "@repo/types";
 
 const LIST_API_URL = "https://dummyjson.com/products?limit=12";

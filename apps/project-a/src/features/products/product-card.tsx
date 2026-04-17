@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Market } from "@repo/types";
-import type { Product } from "@/features/products/product.types";
+import type { Product } from "@repo/data";
 
 type ProductCardProps = {
   market: Market;
