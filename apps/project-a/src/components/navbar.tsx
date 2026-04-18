@@ -8,7 +8,7 @@ type NavbarProps = {
 };
 
 const navLinkClassName =
-  "rounded-full px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 hover:text-zinc-950";
+  "rounded-full border border-transparent px-3 py-2 text-sm text-zinc-700 transition hover:bg-brand-accent/10 hover:text-zinc-950";
 
 export const Navbar = async ({ market }: NavbarProps) => {
   const user = await getSessionUser();
@@ -49,7 +49,7 @@ export const Navbar = async ({ market }: NavbarProps) => {
               </span>
 
               <form action={logoutAction}>
-                <button className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-50 cursor-pointer">
+                <button className="cursor-pointer rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10">
                   Log out
                 </button>
               </form>
@@ -57,7 +57,7 @@ export const Navbar = async ({ market }: NavbarProps) => {
           ) : (
             <Link
               href={`/${market}/login`}
-              className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-50"
+              className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10"
             >
               Login
             </Link>

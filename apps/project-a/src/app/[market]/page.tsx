@@ -29,7 +29,7 @@ export default async function MarketLandingPage({ params }: PageProps) {
       <div className="flex gap-3">
         <Link
           href={`/${market}/products`}
-          className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-50"
+          className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
         >
           Browse products
         </Link>
