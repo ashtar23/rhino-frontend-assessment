@@ -1,8 +1,12 @@
-import { getSessionUser } from "@/features/auth/session";
-import { createSessionValue, setSessionCookie } from "@/features/auth/session";
+import {
+  getSessionUser,
+  createSessionValue,
+  setSessionCookie,
+} from "@/features/auth/session";
 import { validateCredentials } from "@repo/auth";
 import { notFound, redirect } from "next/navigation";
 import { isMarket } from "@repo/types";
+import { Input } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
@@ -39,11 +43,8 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
   }
 
   return (
-    <main className="mx-auto max-w-md px-6 py-16">
-      <div className="space-y-3">
-        <p className="text-sm uppercase">Project A</p>
-        <h1 className="text-3xl font-semibold">Login</h1>
-      </div>
+    <main className="mx-auto max-w-md px-6 py-8">
+      <h1 className="text-3xl font-semibold">Login</h1>
 
       <form action={loginAction} className="mt-8 space-y-4">
         <div className="space-y-2">
@@ -53,7 +54,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
           <input
             id="username"
             name="username"
-            className="w-full rounded-md border px-3 py-2"
+            className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm font-medium"
             placeholder="Enter your username"
           />
         </div>
@@ -66,7 +67,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
             id="password"
             name="password"
             type="password"
-            className="w-full rounded-md border px-3 py-2"
+            className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm font-medium"
             placeholder="Enter your password"
           />
         </div>
@@ -75,7 +76,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
           <p className="text-sm text-red-600">Invalid username or password.</p>
         ) : null}
 
-        <button className="rounded-md px-2 py-1 cursor-pointer bg-indigo-500 text-white">
+        <button className="shrink-0 rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:bg-zinc-50 cursor-pointer">
           Sign in
         </button>
       </form>
