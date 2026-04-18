@@ -6,7 +6,6 @@ import {
 import { validateCredentials } from "@repo/auth";
 import { notFound, redirect } from "next/navigation";
 import { isMarket } from "@repo/types";
-import { Input } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
