@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import type { Market } from "@repo/types";
 import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 
 type NavbarProps = {
-  market: Market;
+  market: string;
 };
 
 const navLinkClassName =
   "rounded-full border border-transparent px-3 py-2 text-sm text-zinc-700 transition hover:bg-brand-accent/10 hover:text-zinc-950";
 
-export const Navbar = async ({ market }: NavbarProps) => {
+const actionClassName =
+  "rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10";
+
+export async function Navbar({ market }: NavbarProps) {
   const user = await getSessionUser();
 
   async function logoutAction() {
@@ -19,6 +21,19 @@ export const Navbar = async ({ market }: NavbarProps) => {
     await clearSessionCookie();
     redirect(`/${market}`);
   }
+
+  const items = [
+    {
+      href: `/${market}`,
+      id: "home",
+      label: "Home",
+    },
+    {
+      href: `/${market}/products`,
+      id: "products",
+      label: "Products",
+    },
+  ];
 
   return (
     <header className="mb-8 rounded-2xl border border-zinc-200 bg-white/90 px-4 py-4 shadow-sm">
@@ -32,12 +47,11 @@ export const Navbar = async ({ market }: NavbarProps) => {
           </Link>
 
           <nav className="flex flex-wrap items-center gap-2">
-            <Link href={`/${market}`} className={navLinkClassName}>
-              Home
-            </Link>
-            <Link href={`/${market}/products`} className={navLinkClassName}>
-              Products
-            </Link>
+            {items.map((item) => (
+              <Link key={item.id} href={item.href} className={navLinkClassName}>
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
 
@@ -47,18 +61,17 @@ export const Navbar = async ({ market }: NavbarProps) => {
               <span className="px-3 py-2 text-sm text-zinc-600">
                 {user.username} ({user.role})
               </span>
-
               <form action={logoutAction}>
-                <button className="cursor-pointer rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10">
+                <button
+                  className={`cursor-pointer ${actionClassName}`}
+                  type="submit"
+                >
                   Log out
                 </button>
               </form>
             </>
           ) : (
-            <Link
-              href={`/${market}/login`}
-              className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10"
-            >
+            <Link href={`/${market}/login`} className={actionClassName}>
               Login
             </Link>
           )}
@@ -66,4 +79,4 @@ export const Navbar = async ({ market }: NavbarProps) => {
       </div>
     </header>
   );
-};
+}
