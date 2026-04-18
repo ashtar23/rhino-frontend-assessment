@@ -37,6 +37,7 @@ export const normalizeProduct = (
     price: product.price,
     currency,
     category: product.category,
+    tags: product.tags,
     image: product.thumbnail,
     images: product.images,
     rating: product.rating,

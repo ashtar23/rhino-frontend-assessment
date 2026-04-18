@@ -6,6 +6,7 @@ export type Product = {
   price: number;
   currency: "EUR" | "CAD";
   category: string;
+  tags: string[];
   image: string;
   images: string[];
   rating: number;
@@ -23,6 +24,7 @@ export type DummyJsonProduct = {
   description: string;
   price: number;
   category: string;
+  tags: string[];
   thumbnail: string;
   images: string[];
   rating: number;

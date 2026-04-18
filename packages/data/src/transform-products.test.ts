@@ -9,6 +9,7 @@ const makeProduct = (id: number): Product => ({
   price: id * 10,
   currency: "EUR",
   category: "test",
+  tags: ["tag-one", "tag-two"],
   image: `https://cdn.example.com/${id}.jpg`,
   images: [`https://cdn.example.com/${id}.jpg`],
   rating: 4,

@@ -34,7 +34,7 @@ importers:
         version: link:../../packages/ui
       next:
         specifier: 16.2.0
-        version: 16.2.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.2.0(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -80,7 +80,7 @@ importers:
         version: link:../../packages/ui
       next:
         specifier: 16.2.0
-        version: 16.2.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.2.0(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -297,6 +297,15 @@ importers:
 
   packages/ui:
     dependencies:
+      '@repo/data':
+        specifier: workspace:*
+        version: link:../data
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../types
+      next:
+        specifier: 16.2.0
+        version: 16.2.0(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -1457,11 +1466,6 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  baseline-browser-mapping@2.10.8:
-    resolution: {integrity: sha512-PCLz/LXGBsNTErbtB6i5u4eLpHeMfi93aUv5duMmj6caNu6IphS4q6UevDnL36sZQv9lrP11dbPKGMaXPwMKfQ==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   brace-expansion@1.1.12:
     resolution: {integrity: sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==}
 
@@ -1510,9 +1514,6 @@ packages:
   camelcase@6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
-
-  caniuse-lite@1.0.30001761:
-    resolution: {integrity: sha512-JF9ptu1vP2coz98+5051jZ4PwQgd2ni8A+gYSN7EA7dPKIMf0pDlSUxhdmVOaV3/fYK5uWBkgSXJaRLr4+3A6g==}
 
   caniuse-lite@1.0.30001788:
     resolution: {integrity: sha512-6q8HFp+lOQtcf7wBK+uEenxymVWkGKkjFpCvw5W25cmMwEDU45p1xQFBQv8JDlMMry7eNxyBaR+qxgmTUZkIRQ==}
@@ -4467,8 +4468,6 @@ snapshots:
 
   baseline-browser-mapping@2.10.19: {}
 
-  baseline-browser-mapping@2.10.8: {}
-
   brace-expansion@1.1.12:
     dependencies:
       balanced-match: 1.0.2
@@ -4522,8 +4521,6 @@ snapshots:
   camelcase@5.3.1: {}
 
   camelcase@6.3.0: {}
-
-  caniuse-lite@1.0.30001761: {}
 
   caniuse-lite@1.0.30001788: {}
 
@@ -5829,16 +5826,16 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@16.2.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@16.2.0(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@next/env': 16.2.0
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.8
-      caniuse-lite: 1.0.30001761
+      baseline-browser-mapping: 2.10.19
+      caniuse-lite: 1.0.30001788
       postcss: 8.4.31
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      styled-jsx: 5.1.6(react@19.2.0)
+      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.2.0
       '@next/swc-darwin-x64': 16.2.0
@@ -6314,10 +6311,12 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-jsx@5.1.6(react@19.2.0):
+  styled-jsx@5.1.6(@babel/core@7.29.0)(react@19.2.0):
     dependencies:
       client-only: 0.0.1
       react: 19.2.0
+    optionalDependencies:
+      '@babel/core': 7.29.0
 
   supports-color@7.2.0:
     dependencies:

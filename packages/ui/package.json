@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    ".": "./src/index.ts",
+    "./styles/sources.css": "./src/styles/sources.css",
+    "./styles/theme.css": "./src/styles/theme.css",
     "./*": "./src/*.tsx"
   },
   "scripts": {
@@ -30,6 +33,9 @@
     "typescript": "5.9.2"
   },
   "dependencies": {
+    "@repo/data": "workspace:*",
+    "@repo/types": "workspace:*",
+    "next": "16.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   }

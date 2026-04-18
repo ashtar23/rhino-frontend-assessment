@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isMarket } from "@repo/types";
 import { getProducts } from "@/features/products/get-products";
-import { ProductCard } from "@/features/products/product-card";
+import { ProductCard } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
@@ -41,9 +41,15 @@ export default async function ProductsPage({ params }: PageProps) {
         <p className="text-zinc-600">Listing refreshed every five minutes</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {products.map((product) => (
-          <ProductCard key={product.id} market={market} product={product} />
+          <ProductCard
+            key={product.id}
+            titlePosition="bottom-left"
+            layout="vertical"
+            market={market}
+            product={product}
+          />
         ))}
       </div>
     </section>
