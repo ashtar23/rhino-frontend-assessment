@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Product } from "@repo/data";
 import type { Market } from "@repo/types";
+import { Button } from "./button";
 
 type ProductCardLayout = "vertical" | "horizontal";
 type ProductCardTitlePosition = "top-right" | "bottom-left";
@@ -111,12 +111,9 @@ const Footer = ({ ctaLabel, market, product }: FooterProps) => {
         {product.price} {product.currency}
       </span>
 
-      <Link
-        href={`/${market}/product/${product.slug}`}
-        className="shrink-0 rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
-      >
+      <Button href={`/${market}/product/${product.slug}`} className="shrink-0">
         {ctaLabel}
-      </Link>
+      </Button>
     </div>
   );
 };

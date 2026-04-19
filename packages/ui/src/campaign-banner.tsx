@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { MockCampaignBanner } from "@repo/data";
+import { Button } from "./button";
 
 type CampaignBannerProps = {
   banner: MockCampaignBanner;
@@ -24,12 +24,9 @@ export const CampaignBanner = ({ banner }: CampaignBannerProps) => {
 
       <p className="mt-3 text-zinc-600">{banner.message}</p>
 
-      <Link
-        href={banner.ctaHref}
-        className="mt-4 inline-flex rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10"
-      >
+      <Button href={banner.ctaHref} className="mt-4 inline-flex">
         {banner.ctaLabel}
-      </Link>
+      </Button>
     </section>
   );
 };

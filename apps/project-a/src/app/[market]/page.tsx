@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getBrandConfig } from "@repo/constants";
 import { isMarket } from "@repo/types";
+import { Button } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
@@ -30,12 +30,7 @@ export default async function MarketLandingPage({ params }: PageProps) {
       </div>
 
       <div className="flex gap-3">
-        <Link
-          href={`/${market}/products`}
-          className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
-        >
-          {config.home.ctaLabel}
-        </Link>
+        <Button href={`/${market}/products`}>{config.home.ctaLabel}</Button>
       </div>
     </section>
   );

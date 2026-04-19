@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getBrandConfig } from "@repo/constants";
+import { Button } from "@repo/ui";
 import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 
 type NavbarProps = {
@@ -9,9 +10,6 @@ type NavbarProps = {
 
 const navLinkClassName =
   "rounded-full border border-transparent px-3 py-2 text-sm text-zinc-700 transition hover:bg-brand-accent/10 hover:text-zinc-950";
-
-const actionClassName =
-  "rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10";
 
 export async function Navbar({ market }: NavbarProps) {
   const config = getBrandConfig("project-a");
@@ -64,18 +62,13 @@ export async function Navbar({ market }: NavbarProps) {
                 {user.username} ({user.role})
               </span>
               <form action={logoutAction}>
-                <button
-                  className={`cursor-pointer ${actionClassName}`}
-                  type="submit"
-                >
+                <Button className="cursor-pointer" type="submit">
                   Log out
-                </button>
+                </Button>
               </form>
             </>
           ) : (
-            <Link href={`/${market}/login`} className={actionClassName}>
-              Login
-            </Link>
+            <Button href={`/${market}/login`}>Login</Button>
           )}
         </div>
       </div>

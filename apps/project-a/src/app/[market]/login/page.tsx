@@ -7,6 +7,7 @@ import { validateCredentials } from "@repo/auth";
 import { getBrandConfig } from "@repo/constants";
 import { notFound, redirect } from "next/navigation";
 import { isMarket, type Market } from "@repo/types";
+import { Button } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
@@ -98,9 +99,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
           <p className="text-sm text-red-600">Invalid username or password.</p>
         ) : null}
 
-        <button className="cursor-pointer shrink-0 rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2">
-          Sign in
-        </button>
+        <Button className="cursor-pointer shrink-0">Sign in</Button>
       </form>
     </main>
   );
