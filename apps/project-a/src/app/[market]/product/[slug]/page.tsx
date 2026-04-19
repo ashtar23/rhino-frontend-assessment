@@ -1,13 +1,15 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getProductBySlug } from "@repo/data";
 import { isMarket } from "@repo/types";
 import { getSessionUser } from "@/features/auth/session";
-import { getProductBySlug } from "@/features/products/get-products";
 
 type PageProps = {
   params: Promise<{ market: string; slug: string }>;
 };
+
+const PRODUCTS_REVALIDATE_SECONDS = 300;
 
 export async function generateMetadata({
   params,
@@ -18,7 +20,11 @@ export async function generateMetadata({
     return { title: "Product" };
   }
 
-  const product = await getProductBySlug(market, slug);
+  const product = await getProductBySlug(market, slug, {
+    requestOptions: {
+      next: { revalidate: PRODUCTS_REVALIDATE_SECONDS },
+    },
+  });
 
   if (!product) {
     return { title: "Product not found" };
@@ -37,7 +43,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const product = await getProductBySlug(market, slug);
+  const product = await getProductBySlug(market, slug, {
+    requestOptions: {
+      next: { revalidate: PRODUCTS_REVALIDATE_SECONDS },
+    },
+  });
 
   if (!product) {
     notFound();

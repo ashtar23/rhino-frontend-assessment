@@ -13,11 +13,17 @@ export default async function MarketLandingPage({ params }: PageProps) {
     notFound();
   }
 
-  const title = market === "ca" ? "Welcome to the Canadian market" : "Welcome";
+  const title =
+    market === "ca"
+      ? "Welcome to the Canadian market"
+      : "Welcome to the English market";
 
   return (
     <section className="space-y-8">
       <div className="space-y-4">
+        <p className="text-sm uppercase tracking-[0.2em] text-brand-accent">
+          Market {market.toUpperCase()}
+        </p>
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">
           {title}
         </h1>

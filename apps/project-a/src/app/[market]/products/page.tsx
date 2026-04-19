@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getProducts } from "@repo/data";
 import { isMarket } from "@repo/types";
-import { getProducts } from "@/features/products/get-products";
 import { ProductCard } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
 };
+
+const PRODUCT_LIST_LIMIT = 12;
+const PRODUCTS_REVALIDATE_SECONDS = 300;
 
 export async function generateMetadata({
   params,
@@ -30,7 +33,12 @@ export default async function ProductsPage({ params }: PageProps) {
     notFound();
   }
 
-  const products = await getProducts(market);
+  const products = await getProducts(market, {
+    limit: PRODUCT_LIST_LIMIT,
+    requestOptions: {
+      next: { revalidate: PRODUCTS_REVALIDATE_SECONDS },
+    },
+  });
 
   return (
     <section className="space-y-8">
