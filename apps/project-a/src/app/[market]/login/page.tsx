@@ -5,12 +5,25 @@ import {
 } from "@/features/auth/session";
 import { validateCredentials } from "@repo/auth";
 import { notFound, redirect } from "next/navigation";
-import { isMarket } from "@repo/types";
+import { isMarket, type Market } from "@repo/types";
 
 type PageProps = {
   params: Promise<{ market: string }>;
   searchParams: Promise<{ error?: string }>;
 };
+
+export async function submitLogin(market: Market, formData: FormData) {
+  const username = String(formData.get("username") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const user = validateCredentials(username, password);
+
+  if (!user) {
+    redirect(`/${market}/login?error=invalid-credentials`);
+  }
+
+  await setSessionCookie(createSessionValue(user));
+  redirect(`/${market}`);
+}
 
 export default async function LoginPage({ params, searchParams }: PageProps) {
   const { market } = await params;
@@ -20,25 +33,17 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
     notFound();
   }
 
+  const resolvedMarket: Market = market;
   const existingUser = await getSessionUser();
 
   if (existingUser) {
-    redirect(`/${market}`);
+    redirect(`/${resolvedMarket}`);
   }
 
   async function loginAction(formData: FormData) {
     "use server";
 
-    const username = String(formData.get("username") ?? "");
-    const password = String(formData.get("password") ?? "");
-    const user = validateCredentials(username, password);
-
-    if (!user) {
-      redirect(`/${market}/login?error=invalid-credentials`);
-    }
-
-    await setSessionCookie(createSessionValue(user));
-    redirect(`/${market}`);
+    await submitLogin(resolvedMarket, formData);
   }
 
   return (
