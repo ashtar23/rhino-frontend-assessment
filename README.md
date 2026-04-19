@@ -1,159 +1,194 @@
-# Turborepo starter
+# Rhino Frontend Assessment
 
-This Turborepo starter is maintained by the Turborepo core team.
+Built with Next.js 16, React 19, TypeScript, and Turborepo
 
-## Using this example
+It contains two separate apps:
 
-Run the following command:
+- `project-a`
+- `project-b`
 
-```sh
-npx create-turbo@latest
+Both apps support:
+
+- `/en`
+- `/ca`
+- `/[market]/login`
+- `/[market]/products`
+- `/[market]/product/[slug]`
+
+## Setup
+
+Install dependencies:
+
+```bash
+pnpm install
 ```
 
-## What's inside?
+## Run The Apps
 
-This Turborepo includes the following packages/apps:
+Run both apps at once:
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+pnpm dev
 ```
 
-Without global `turbo`, use your package manager:
+App URLs:
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+- `project-b`: [http://localhost:3000/en](http://localhost:3000/en)
+- `project-a`: [http://localhost:3001/en](http://localhost:3001/en)
+
+Run one app only:
+
+```bash
+pnpm --filter project-b dev
+pnpm --filter project-a dev
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Demo Credentials
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Stored in [packages/auth/src/credentials.json](./packages/auth/src/credentials.json):
 
-```sh
-turbo build --filter=docs
+```txt
+admin / password123
+user / user123
 ```
 
-Without global `turbo`:
+## Scripts
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+Useful root commands:
+
+```bash
+pnpm dev
+pnpm build
+pnpm lint
+pnpm check-types
+pnpm test
+pnpm docker:build
+pnpm docker:up
 ```
 
-### Develop
+## Architecture
 
-To develop all apps and packages, run the following command:
+Shared packages:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+- `@repo/ui`
+  - shared UI like `ProductCard`, `CampaignBanner`, `Button`, etc
+- `@repo/data`
+  - product fetching, normalization, mocked campaign banner data
+- `@repo/auth`
+  - credential validation and session helpers
+- `@repo/constants`
+  - typed brand and market config
+- `@repo/types`
+  - shared core types
 
-```sh
-cd my-turborepo
-turbo dev
+App owned code:
+
+- navbars
+- route composition
+- auth/session adapters tied to Next cookies
+- page layout decisions
+
+That split was intentional. A shared `ProductCard` makes sense. A shared navbar started getting kinda messy, so I decided that each app should own its own navbar instead.
+
+## Shared Component Approach
+
+The main shared component is `ProductCard`
+
+It is reused by both apps, but each app can change:
+
+- layout
+- title position
+- CTA label
+- whether tags are shown
+- whether a secondary image is shown
+
+I also added a shared `CampaignBanner` and `Button` once I noticed repetition.
+
+## Brand Differences
+
+The apps intentionally share most of the route structure and business flow.
+
+The differences are mainly in:
+
+- navbar styling/composition
+- shared component presentation
+- copy/config values
+- feature toggles
+
+This felt like the cleanest way to show multi brand support without inventing fake product logic diffs.
+
+## Rendering / SEO
+
+This is a server first app router setup.
+
+That means:
+
+- pages render on the server
+- login/logout use Server Actions
+- product data uses fetch level revalidation every 5 minutes
+- session aware layout rendering stays dynamic because the navbar reads cookies on the server
+
+So this is not pure static generation. It's more of a mix of:
+
+- server rendered dynamic routes
+- cached and revalidated product data
+
+The product list shuffles part of the data every 5 minutes and logs the refresh so there is visible evidence of content updates.
+
+## Mocked API
+
+Besides the public DummyJSON product source, the repo also includes a mocked internal campaign banner API:
+
+- `/api/campaign-banner`
+
+That is meant to represent an unreleased content endpoint separate from the public API.
+
+## Testing
+
+This repo includes both unit and integration coverage.
+
+Unit coverage focuses on shared logic:
+
+- `@repo/ui`
+- `@repo/data`
+- `@repo/auth`
+
+Integration coverage is demonstrated in `project-a` with:
+
+- login flow
+- session creation
+- gated product detail behavior
+
+Run tests:
+
+```bash
+pnpm test
+pnpm --filter project-a test
+pnpm --filter @repo/ui test
+pnpm --filter @repo/data test
+pnpm --filter @repo/auth test
 ```
 
-Without global `turbo`, use your package manager:
+## Docker
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
+The repo includes:
+
+- one reusable root `Dockerfile`
+- one `docker-compose.yml`
+
+Both apps can be built from the same Docker path and run independently:
+
+- `project-b` on port `3000`
+- `project-a` on port `3001`
+
+Build:
+
+```bash
+pnpm docker:build
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Run:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
+```bash
+pnpm docker:up
 ```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
