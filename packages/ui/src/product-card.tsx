@@ -13,6 +13,7 @@ type ProductCardProps = {
   titlePosition?: ProductCardTitlePosition;
   secondaryImage?: string;
   ctaLabel?: string;
+  showTags?: boolean;
 };
 
 type CardSharedContentProps = {
@@ -204,8 +205,9 @@ export const ProductCard = ({
   titlePosition = "top-right",
   secondaryImage,
   ctaLabel = "View product",
+  showTags = true,
 }: ProductCardProps) => {
-  const tags = product.tags.filter(Boolean);
+  const tags = showTags ? product.tags.filter(Boolean) : [];
 
   return (
     <article className="rounded-2xl border border-zinc-200 p-4 shadow-sm">

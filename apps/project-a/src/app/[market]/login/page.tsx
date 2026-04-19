@@ -4,6 +4,7 @@ import {
   setSessionCookie,
 } from "@/features/auth/session";
 import { validateCredentials } from "@repo/auth";
+import { getBrandConfig } from "@repo/constants";
 import { notFound, redirect } from "next/navigation";
 import { isMarket, type Market } from "@repo/types";
 
@@ -34,6 +35,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
   }
 
   const resolvedMarket: Market = market;
+  const config = getBrandConfig("project-a");
   const existingUser = await getSessionUser();
 
   if (existingUser) {
@@ -48,7 +50,23 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
 
   return (
     <main className="mx-auto max-w-md px-6 py-8">
-      <h1 className="text-3xl font-semibold">Login</h1>
+      {config.features.emphasizeMemberAccess ? (
+        <div className="space-y-3">
+          {config.login.introLabel ? (
+            <p className="text-sm uppercase text-brand-accent">
+              {config.login.introLabel}
+            </p>
+          ) : null}
+
+          <h1 className="text-3xl font-semibold">{config.login.title}</h1>
+
+          {config.login.description ? (
+            <p className="text-zinc-600">{config.login.description}</p>
+          ) : null}
+        </div>
+      ) : (
+        <h1 className="text-3xl font-semibold">{config.login.title}</h1>
+      )}
 
       <form action={loginAction} className="mt-8 space-y-4">
         <div className="space-y-2">

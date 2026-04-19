@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getBrandConfig } from "@repo/constants";
 import { getProducts } from "@repo/data";
 import { isMarket } from "@repo/types";
 import { ProductCard } from "@repo/ui";
@@ -20,9 +21,11 @@ export async function generateMetadata({
     return { title: "Products" };
   }
 
+  const config = getBrandConfig("project-a");
+
   return {
-    title: `Project A Products (${market.toUpperCase()})`,
-    description: "Server-rendered product listing for Project A",
+    title: `${config.navbar.brandLabel} Products (${market.toUpperCase()})`,
+    description: `Server-rendered product listing for ${config.navbar.brandLabel}`,
   };
 }
 
@@ -33,6 +36,7 @@ export default async function ProductsPage({ params }: PageProps) {
     notFound();
   }
 
+  const config = getBrandConfig("project-a");
   const products = await getProducts(market, {
     limit: PRODUCT_LIST_LIMIT,
     requestOptions: {
@@ -53,10 +57,15 @@ export default async function ProductsPage({ params }: PageProps) {
         {products.map((product) => (
           <ProductCard
             key={product.id}
-            titlePosition="bottom-left"
-            layout="vertical"
+            ctaLabel={config.products.card.ctaLabel}
+            titlePosition={config.products.card.titlePosition}
+            layout={config.products.card.layout}
             market={market}
             product={product}
+            showTags={config.features.showProductTags}
+            secondaryImage={
+              config.features.showSecondaryImage ? product.images[1] : undefined
+            }
           />
         ))}
       </div>

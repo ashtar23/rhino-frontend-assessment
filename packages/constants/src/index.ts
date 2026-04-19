@@ -1,1 +1,2 @@
+export * from "./brand-config";
 export const DUMMYJSON_PRODUCTS_API_URL = "https://dummyjson.com/products";

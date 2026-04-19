@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getBrandConfig } from "@repo/constants";
 import { isMarket } from "@repo/types";
 
 type PageProps = {
@@ -13,23 +14,19 @@ export default async function MarketLandingPage({ params }: PageProps) {
     notFound();
   }
 
-  const title =
-    market === "ca"
-      ? "Welcome to the Canadian market"
-      : "Welcome to the English market";
+  const config = getBrandConfig("project-b");
+  const marketContent = config.markets[market];
 
   return (
     <section className="space-y-8">
       <div className="space-y-4">
-        <p className="text-sm uppercase tracking-[0.2em] text-brand-accent">
+        <p className="text-sm uppercase text-brand-accent">
           Market {market.toUpperCase()}
         </p>
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">
-          {title}
+          {marketContent.landingTitle}
         </h1>
-        <p className="text-zinc-600">
-          Browse products available in the {market.toUpperCase()} market
-        </p>
+        <p className="text-zinc-600">{marketContent.landingDescription}</p>
       </div>
 
       <div className="flex gap-3">
@@ -37,7 +34,7 @@ export default async function MarketLandingPage({ params }: PageProps) {
           href={`/${market}/products`}
           className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
         >
-          Explore collection
+          {config.home.ctaLabel}
         </Link>
       </div>
     </section>

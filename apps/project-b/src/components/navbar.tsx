@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getBrandConfig } from "@repo/constants";
 import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 
 type NavbarProps = {
@@ -32,6 +33,7 @@ const getItems = (market: string): NavItem[] => [
 ];
 
 export async function Navbar({ market }: NavbarProps) {
+  const config = getBrandConfig("project-b");
   const user = await getSessionUser();
   const items = getItems(market);
 
@@ -48,9 +50,9 @@ export async function Navbar({ market }: NavbarProps) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
           <Link
             href={`/${market}`}
-            className="text-sm font-semibold uppercase tracking-[0.2em] text-white"
+            className="text-sm font-semibold uppercase text-white"
           >
-            Project B
+            {config.navbar.brandLabel}
           </Link>
 
           <nav className="flex flex-wrap items-center gap-2">

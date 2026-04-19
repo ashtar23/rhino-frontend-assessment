@@ -88,6 +88,13 @@ describe("ProductCard", () => {
     ).toBeInTheDocument();
   });
 
+  it("hides product tags when showTags is false", () => {
+    render(<ProductCard market="en" product={product} showTags={false} />);
+
+    expect(screen.queryByText("sport")).not.toBeInTheDocument();
+    expect(screen.queryByText("elegant")).not.toBeInTheDocument();
+  });
+
   it("hides the secondary image when secondaryImage is not provided", () => {
     render(<ProductCard market="en" product={product} />);
 

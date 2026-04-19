@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getBrandConfig } from "@repo/constants";
 import { clearSessionCookie, getSessionUser } from "@/features/auth/session";
 
 type NavbarProps = {
@@ -13,6 +14,7 @@ const actionClassName =
   "rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-brand-accent hover:bg-brand-accent/10";
 
 export async function Navbar({ market }: NavbarProps) {
+  const config = getBrandConfig("project-a");
   const user = await getSessionUser();
 
   async function logoutAction() {
@@ -43,7 +45,7 @@ export async function Navbar({ market }: NavbarProps) {
             href={`/${market}`}
             className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-900"
           >
-            Project A
+            {config.navbar.brandLabel}
           </Link>
 
           <nav className="flex flex-wrap items-center gap-2">

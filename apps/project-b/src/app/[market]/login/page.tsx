@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { validateCredentials } from "@repo/auth";
+import { getBrandConfig } from "@repo/constants";
 import { isMarket, type Market } from "@repo/types";
 import {
   createSessionValue,
@@ -34,6 +35,7 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
   }
 
   const resolvedMarket: Market = market;
+  const config = getBrandConfig("project-b");
   const existingUser = await getSessionUser();
 
   if (existingUser) {
@@ -48,15 +50,22 @@ export default async function LoginPage({ params, searchParams }: PageProps) {
 
   return (
     <main className="mx-auto max-w-md px-6 py-8">
-      <div className="space-y-3">
-        <p className="text-sm uppercase tracking-[0.2em] text-brand-accent">
-          Member access
-        </p>
-        <h1 className="text-3xl font-semibold">Sign in to Project B</h1>
-        <p className="text-zinc-600">
-          Access extended product details and market-specific catalogue data.
-        </p>
-      </div>
+      {config.features.emphasizeMemberAccess ? (
+        <div className="space-y-3">
+          {config.login.introLabel ? (
+            <p className="text-sm uppercase text-brand-accent">
+              {config.login.introLabel}
+            </p>
+          ) : null}
+          <h1 className="text-3xl font-semibold">{config.login.title}</h1>
+
+          {config.login.description ? (
+            <p className="text-zinc-600">{config.login.description}</p>
+          ) : null}
+        </div>
+      ) : (
+        <h1 className="text-3xl font-semibold">{config.login.title}</h1>
+      )}
 
       <form action={loginAction} className="mt-8 space-y-4">
         <div className="space-y-2">
