@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBrandConfig } from "@repo/constants";
-import { getProducts } from "@repo/data";
+import { getMockCampaignBanner, getProducts } from "@repo/data";
 import { isMarket } from "@repo/types";
-import { ProductCard } from "@repo/ui";
+import { CampaignBanner, ProductCard } from "@repo/ui";
 
 type PageProps = {
   params: Promise<{ market: string }>;
@@ -37,6 +37,7 @@ export default async function ProductsPage({ params }: PageProps) {
   }
 
   const config = getBrandConfig("project-b");
+  const campaignBanner = getMockCampaignBanner("project-b", market);
   const products = await getProducts(market, {
     limit: PRODUCT_LIST_LIMIT,
     requestOptions: {
@@ -52,6 +53,8 @@ export default async function ProductsPage({ params }: PageProps) {
         </h1>
         <p className="text-zinc-600">Listing refreshed every five minutes</p>
       </div>
+
+      <CampaignBanner banner={campaignBanner} />
 
       <div className="grid gap-6">
         {products.map((product) => (
