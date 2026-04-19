@@ -3,5 +3,5 @@
 @import "@repo/ui/styles/theme.css";
 
 @theme {
-  --color-brand-accent: oklch(0.68 0.19 34.11);
+  --color-brand-accent: oklch(0.74 0.17 28.98);
 }

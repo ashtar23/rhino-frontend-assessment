@@ -75,6 +75,15 @@ importers:
 
   apps/project-b:
     dependencies:
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@repo/data':
+        specifier: workspace:*
+        version: link:../../packages/data
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui

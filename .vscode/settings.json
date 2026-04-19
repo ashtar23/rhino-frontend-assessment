@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.configFile": {
+    "apps/project-a/src/app/globals.css": [
+      "apps/project-a/src/**",
+      "packages/ui/src/**"
+    ],
+    "apps/project-b/src/app/globals.css": [
+      "apps/project-b/src/**",
+      "packages/ui/src/**"
+    ]
+  }
+}
