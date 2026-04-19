@@ -1,0 +1,12 @@
+node_modules
+.next
+.turbo
+coverage
+dist
+.git
+.gitignore
+README.md
+**/node_modules
+**/.next
+**/coverage
+**/dist

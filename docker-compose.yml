@@ -1,0 +1,22 @@
+services:
+  project-a:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: project-a
+    ports:
+      - "3001:3000"
+    environment:
+      PORT: 3000
+
+  project-b:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: project-b
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
