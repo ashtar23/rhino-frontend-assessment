@@ -21,5 +21,7 @@ export default {
     "^@repo/types$": "<rootDir>/../../packages/types/src/index.ts",
     "^@repo/ui$": "<rootDir>/../../packages/ui/src/index.ts",
   },
+  modulePathIgnorePatterns: ["<rootDir>/.next/"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/", "/.next/"],
+  watchPathIgnorePatterns: ["<rootDir>/.next/"],
 };
